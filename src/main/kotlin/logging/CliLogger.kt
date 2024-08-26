@@ -1,4 +1,4 @@
-package com.dulllife
+package com.dulllife.logging
 
 class CliLogger: UncleLogger {
     override fun log(msg: String) {

@@ -1,13 +1,16 @@
-package com.dulllife
+package com.dulllife.handlers
 
+import com.dulllife.logging.UncleLogger
+import com.dulllife.repository.UncleRepo
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AdviceHandler @Inject constructor(private val logger: UncleLogger) {
+class AdviceHandler @Inject constructor(private val logger: UncleLogger, private val uncleRepo: UncleRepo) {
     val uncleAdvice = listOf(
         "Invest in property; it's the safest bet for the future.",
         "Wake up early; successful people start their day before sunrise.",
@@ -33,6 +36,12 @@ class AdviceHandler @Inject constructor(private val logger: UncleLogger) {
 
     suspend fun getAdvice(call: ApplicationCall) {
         logger.log("GET /advice received: ${System.identityHashCode(this)}.")
-        call.respondText(contentType = ContentType.Text.Plain, status = HttpStatusCode.OK) { "${uncleAdvice.random()}\n" }
+        call.respondText(contentType = ContentType.Text.Plain, status = HttpStatusCode.OK) { "${uncleRepo.getAdvice()}\n" }
+    }
+
+    suspend fun addAdvice(call: ApplicationCall) {
+        val advice = call.receiveText()
+        logger.log("POST /advice received: ${advice}.")
+        uncleRepo.addAdvice(advice)
     }
 }
