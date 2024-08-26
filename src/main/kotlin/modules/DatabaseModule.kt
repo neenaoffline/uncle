@@ -1,5 +1,6 @@
 package com.dulllife.modules
 
+import com.dulllife.UncleConfig
 import dagger.Module
 import dagger.Provides
 import io.ktor.server.http.*
@@ -13,9 +14,9 @@ import javax.sql.DataSource
 interface DatabaseModule {
     companion object {
         @Provides
-        fun providesDataSource(): DataSource {
+        fun providesDataSource(uncleConfig: UncleConfig): DataSource {
             val dataSource = SQLiteDataSource()
-            dataSource.url = "jdbc:sqlite:/tmp/uncle.db"
+            dataSource.url = "jdbc:sqlite:${uncleConfig.databasePath}"
             return dataSource
         }
 

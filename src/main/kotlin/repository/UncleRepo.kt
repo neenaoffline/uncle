@@ -4,21 +4,18 @@ import com.dulllife.dao.Advice
 import com.dulllife.dao.AdviceTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Random
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import javax.inject.Inject
 
 class UncleRepo @Inject constructor(private val db: Database) {
     fun addAdvice(advice: String) {
-        println("addingAdvice received: ${advice}.")
         transaction {
-            AdviceTable.insert {
-                it[AdviceTable.adviceText] = advice.trim()
+            Advice.new {
+                adviceText = advice.trim()
             }
         }
-
-        println("addAdvice received: ${advice}.")
     }
 
     fun getAdvice(): String {
@@ -32,7 +29,6 @@ class UncleRepo @Inject constructor(private val db: Database) {
                 }
                 .toList()
                 .first()
-            println("getAdvice received: ${advice}.")
         }
         return advice
     }

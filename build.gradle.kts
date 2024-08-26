@@ -33,6 +33,11 @@ dependencies {
     implementation("org.flywaydb:flyway-core:10.17.2")
     implementation("org.xerial:sqlite-jdbc:3.46.1.0")
     implementation("ch.qos.logback:logback-classic:1.5.7")
+
+    implementation("com.sksamuel.hoplite:hoplite-core:2.8.0.RC3")
+    implementation("com.sksamuel.hoplite:hoplite-toml:2.8.0.RC3")
+
+
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 

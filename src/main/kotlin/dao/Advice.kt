@@ -3,14 +3,10 @@ package com.dulllife.dao
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IdTable
-import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.dao.id.IntIdTable
 
-object AdviceTable: IdTable<Int>("advice") {
-    override val id: Column<EntityID<Int>> = integer("id").entityId()
+object AdviceTable: IntIdTable() {
     val adviceText = varchar("advice_text", 1024)
-
-    override val primaryKey = PrimaryKey(id)
 }
 
 class Advice(id: EntityID<Int>) : IntEntity(id) {
